@@ -3,6 +3,7 @@ package demo.campus_management_system.controller;
 import demo.campus_management_system.entity.DTO.ClassroomUsageQueryDTO;
 import demo.campus_management_system.entity.DTO.UpdateStatusDTO;
 
+import demo.campus_management_system.entity.VO.CalculateClassroomMetricsVo;
 import demo.campus_management_system.entity.VO.ClassroomUsageStatsVO;
 import demo.campus_management_system.entity.VO.ClassroomUsageVO;
 import demo.campus_management_system.entity.VO.ListLogsVO;
@@ -51,7 +52,7 @@ public class TeachSecretaryController {
 
 
     /**
-     * 教秘审核工作台
+     * 获取教室使用率统计数据
      */
     @GetMapping("/getClassroomUsageStats")
     public ResultDTO<ClassroomUsageStatsVO> getClassroomUsageStats(
@@ -107,10 +108,10 @@ public class TeachSecretaryController {
     @GetMapping("/classroomUsage")
     public ResultDTO<List<ClassroomUsageVO>> classroomUsage(
             @RequestHeader(value = "Authorization") String token,
-            @RequestParam(required = false) String date_start,
-            @RequestParam(required = false) String date_end,
-            @RequestParam(required = false) String building_id,
-            @RequestParam(required = false) String room_type,
+            @RequestParam(required = false) String dateStart,
+            @RequestParam(required = false) String dateEnd,
+            @RequestParam(required = false) String buildingId,
+            @RequestParam(required = false) String roomType,
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
         
@@ -118,13 +119,22 @@ public class TeachSecretaryController {
         
         // 构建查询DTO
         ClassroomUsageQueryDTO queryDTO = new ClassroomUsageQueryDTO();
-        queryDTO.setDate_start(date_start);
-        queryDTO.setDate_end(date_end);
-        queryDTO.setBuilding_id(building_id);
-        queryDTO.setRoom_type(room_type);
+        queryDTO.setDate_start(dateStart);
+        queryDTO.setDate_end(dateEnd);
+        queryDTO.setBuilding_id(buildingId);
+        queryDTO.setRoom_type(roomType);
         queryDTO.setPage(page);
         queryDTO.setSize(size);
 
         return teachSecretaryService.classroomUsage(token, queryDTO);
+    }
+
+    /**
+     * 查看教室使用率页面
+     */
+    @GetMapping("/calculateClassroomMetrics")
+    public ResultDTO<CalculateClassroomMetricsVo> calculateClassroomMetrics(
+            @RequestHeader(value = "Authorization") String token) {
+        return teachSecretaryService.calculateClassroomMetrics(token);
     }
 }

@@ -3,6 +3,7 @@ package demo.campus_management_system.dao.dao_interface;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import demo.campus_management_system.entity.Teach_Secretary;
+import demo.campus_management_system.entity.VO.CalculateClassroomMetricsVo;
 import demo.campus_management_system.entity.VO.ClassroomUsageStatsVO;
 import demo.campus_management_system.entity.VO.ClassroomUsageVO;
 import demo.campus_management_system.entity.VO.ListLogsVO;
@@ -74,4 +75,6 @@ public interface TeachSecretaryMapper extends BaseMapper<Teach_Secretary> {
     );
 
     ClassroomUsageStatsVO getClassroomUsageStats();
+
+    CalculateClassroomMetricsVo calculateClassroomMetrics();
 }
